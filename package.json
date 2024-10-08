@@ -1,0 +1,30 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.4.2",
+        "@commitlint/config-conventional": "^17.4.2",
+        "axios": "^0.27",
+        "commitizen": "^4.2.5",
+        "cz-conventional-changelog": "^3.3.0",
+        "husky": "^8.0.0",
+        "laravel-vite-plugin": "^0.6.0",
+        "lint-staged": "^13.0.3",
+        "lodash": "^4.17.19",
+        "postcss": "^8.1.14",
+        "vite": "^3.0.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "dependencies": {
+        "@sentry/react": "^7.40.0",
+        "react-icons": "^4.6.0"
+    }
+}
