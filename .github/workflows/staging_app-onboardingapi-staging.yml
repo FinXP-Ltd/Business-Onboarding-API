@@ -30,13 +30,14 @@ jobs:
       - name: Add HTTP basic auth credentials
         run: echo '${{ secrets.COMPOSER_AUTH }}' > $GITHUB_WORKSPACE/auth.json
 
-      - name: Update Composer Package
-        run: composer update --lock
 
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --optimize-autoloader --no-dev --prefer-dist --no-progress
 
+      - name: Update Composer Package
+        run: composer update --lock
+        
       - name: Run composer dump
         run: composer dump-autoload
 
