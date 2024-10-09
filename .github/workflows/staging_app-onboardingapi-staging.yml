@@ -6,7 +6,7 @@ name: app-onboardingapi-staging - Build and deploy PHP app to Azure Web App
 on:
   push:
     branches:
-      - none
+      - staging
   workflow_dispatch:
 
 jobs:
