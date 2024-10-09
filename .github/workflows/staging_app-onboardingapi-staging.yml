@@ -35,8 +35,8 @@ jobs:
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --optimize-autoloader --no-dev --prefer-dist --no-progress
 
-      - name: Update Composer Package
-        run: composer update --lock
+      # - name: Update Composer Package
+      #   run: composer update --lock
         
       - name: Run composer dump
         run: composer dump-autoload
