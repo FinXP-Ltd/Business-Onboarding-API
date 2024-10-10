@@ -107,33 +107,6 @@ class BusinessController extends BaseController
         ], Response::HTTP_OK);
     }
 
-    public function saveProgress(BusinessValidate $businessRequest, Business $business): JsonResponse
-    {
-        $businessRequest->validated();
-
-        if ($business->status == Business::STATUS_SUBMITTED) {
-            return $this->response(
-                ['code' => Response::HTTP_CONFLICT,
-                'status' => 'failed', 'message' => 'Unable to update Business. Business is already submitted'],
-                Response::HTTP_UNPROCESSABLE_ENTITY
-            );
-        }
-
-        $businessId = BusinessFacade::updateBusiness($business, $businessRequest);
-
-        if (! $businessId) {
-            return $this->response(
-                ['status' => Response::HTTP_NOT_FOUND, 'message' => __(self::RESPONSE_BUSINESS_NOT_EXIST)],
-                Response::HTTP_NOT_FOUND
-            );
-        }
-
-        return $this->response([
-            'status' => Response::HTTP_OK,
-            'message' => 'Successfully Saved.'
-        ], Response::HTTP_OK);
-    }
-
     public function downloadDeclaration(Business $business)
     {
         $headers = [
@@ -398,10 +371,10 @@ class BusinessController extends BaseController
     {
         $documents = BusinessFacade::getDocumentList($mappingId);
 
-        if (!$documents) {
+        if (!is_array($documents)) {
             return $this->response([
                 'status' => Response::HTTP_NOT_FOUND,
-                'message' =>  __('response.documents.no_uploaded'),
+                'message' =>  __('response.documents.entity_not_found'),
             ], Response::HTTP_NOT_FOUND);
         }
 
