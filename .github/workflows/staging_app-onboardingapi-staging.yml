@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: app-onboardingapi-staging - Build and deploy PHP app to Azure Web App
+
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Check if composer.json exists
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: 'composer.json'
+
+      - name: Add HTTP basic auth credentials
+        run: echo '${{ secrets.COMPOSER_AUTH }}' > $GITHUB_WORKSPACE/auth.json
+
+
+      - name: Run composer install if composer.json exists
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: composer validate --no-check-publish && composer install --optimize-autoloader --no-dev --prefer-dist --no-progress
+
+      # - name: Update Composer Package
+      #   run: composer update --lock
+        
+      - name: Run composer dump
+        run: composer dump-autoload
+
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'app-onboardingapi-staging'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9E5A85DC5A594A5AAEB91A4358CB9B4E }}
+          package: .
