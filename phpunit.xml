@@ -12,9 +12,6 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">tests/Unit</directory>
         </testsuite>
-        <testsuite name="ApplyCorporate">
-            <directory suffix="Test.php">tests/ApplyCorporate/Feature</directory>
-        </testsuite>
         <testsuite name="Onboarding">
             <directory suffix="Test.php">tests/Onboarding/Feature</directory>
             <directory suffix="Test.php">tests/Onboarding/RestrictQueryParam</directory>

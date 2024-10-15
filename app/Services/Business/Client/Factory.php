@@ -839,6 +839,10 @@ class Factory
         if($existingId) {
             $allFiles = Document::where('documentable_id', $existingId)->get();
 
+            if (!$allFiles) {
+                return $missingList;
+            }
+
             foreach ($allFiles as $file) {
                 $label = ucwords(str_replace('_',' ',$file->document_type));
                 $missingList[$label][] = [
@@ -848,6 +852,8 @@ class Factory
                     'file_type' => $file->file_type
                 ];
             }
+        } else {
+            return $existingId;
         }
 
         return $missingList;

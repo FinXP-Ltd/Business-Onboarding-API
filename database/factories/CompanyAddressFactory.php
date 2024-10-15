@@ -19,9 +19,9 @@ class CompanyAddressFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition()
-    {   
+    {
         // $randomBoolean = (bool)random_int(0, 1);
-        
+
         return [
             "id" => $this->faker->uuid,
             'tax_information_id' => TaxInformation::factory(),
